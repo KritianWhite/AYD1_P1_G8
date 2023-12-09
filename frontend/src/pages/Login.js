@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Service from "../services/Service.js";
 import './Styles/Login.css';
 import ImageComponent from '../components/ImageComponent';
 
@@ -7,6 +8,17 @@ var SHA256 = require("crypto-js/sha256");
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [response, setResponse] = useState("");
+
+
+  const info = () => {
+    Service.ping().then((response) => {
+      console.log(response);
+    });
+  };
+
+  const vivo = (<button class="button-17" role="button" onClick={info}>Vivo</button>);
+
 
 
   const getUsers = (e) => {
@@ -42,6 +54,7 @@ const Login = () => {
 
   return (
     <div className="login-container">
+      {vivo}
       <form onSubmit={handleSubmit} className="login-form">
         <ImageComponent />
         <input
