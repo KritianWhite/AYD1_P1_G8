@@ -9,3 +9,4 @@ class PingController{
 }
 
 export const pingController = new PingController();
+ 

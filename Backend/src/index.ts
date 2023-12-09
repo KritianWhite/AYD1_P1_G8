@@ -5,6 +5,7 @@ import cors from 'cors';
 // Rutas Importadas
 import indexRoutes from './routes/indexRoutes';
 import pingRoutes from './routes/pingRoutes';
+import exp from 'constants';
 
 class Server {
 
@@ -35,6 +36,9 @@ class Server {
             console.log('Servidor en el puerto ', this.app.get('port'))
         });
     }
+
+    
 }
 const server = new Server();
+export default server.app;
 server.start()
