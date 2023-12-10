@@ -162,6 +162,101 @@ class LibroController{
         }
     }
 
+    // GET - todos los comentarios del libro
+    public async ListaComentarios(req: Request, res: Response): Promise<void> {
+        try {
+            const { titulo } = req.params;
+            // Realiza la consulta 
+            pool.query(
+                'SELECT COMENTARIO.* FROM COMENTARIO JOIN LIBRO ON COMENTARIO.libro = LIBRO.id_libro WHERE LIBRO.titulo = ?',
+                [titulo],(error, results) => {
+                    // Verifica si hay resultados
+                    if (results && results.length > 0) {
+                        res.json(results);
+                        console.log("Comentarios del libro:", results);
+                    } else {
+                        res.json({}); // Enviar un JSON vacío 
+                        console.log("No se encontraron comentarios para el libro");
+                    }
+                }
+            );
+        } catch (error) {
+            console.error('Error al obtener los comentarios del libro:', error);
+            res.status(500).json({ message: 'Error al obtener los comentarios del libro' });
+        }
+    }
+
+    // post - Escribir comentario a un libro 
+    public async IngresarComentario(req: Request, res: Response): Promise<void> {
+        try {
+            const { email, titulo } = req.params;
+            const { comentario } = req.body.comentario;
+            var idUsuario,idLibro;
+            // Obtener id_usuario e id_libro
+            pool.query('SELECT id_usuario, id_libro FROM USUARIO, LIBRO WHERE email = ? AND titulo = ?',
+            [email, titulo], (error, results) => {
+                // Verifica si hay resultados 
+                if (!(results.length == 0)) {
+                    idUsuario = results[0].id_usuario;
+                    idLibro = results[0].id_libro;
+                }else {
+                    res.status(404).json({ message: 'Usuario o libro no encontrado' });
+                    return;
+                }
+            });
+            // Insertar comentario
+            pool.query('INSERT INTO COMENTARIO (comentario, usuario, libro) VALUES (?, ?, ?)',
+            [comentario, idUsuario, idLibro], (insertError) => {
+                res.json({ message: 'Comentario agregado' })
+            });
+            
+        } catch (error) {
+            console.error('Error en rentar el libro:', error);
+            res.status(500).json({ message: 'Error en rentar el libro' });
+        }
+    }
+
+     // POST - Eliminar comentario -tiene que ser el autor del comentario
+    public EliminarComentario(req: Request, res: Response): void {
+        try {
+            const { email } = req.params;
+            const { comentarioId } = req.body;
+
+            // Obtener id_usuario del usuario que realiza la solicitud
+            pool.query('SELECT id_usuario FROM USUARIO WHERE email = ?', [email], (error, results) => {
+
+                if (results.length === 0) {
+                    res.status(404).json({ message: 'Usuario no encontrado' });
+                    return;
+                }
+                const idUsuarioSolicitante = results[0].id_usuario;
+                // Verificar si el usuario es el autor del comentario
+                pool.query('SELECT id_usuario FROM COMENTARIO WHERE id_comentario = ?', [comentarioId], (error, results) => {
+                    if (results.length === 0) {
+                        res.status(404).json({ message: 'Comentario no encontrado' });
+                        return;
+                    }
+                    const idUsuarioAutor = results[0].id_usuario;
+                    if (idUsuarioSolicitante !== idUsuarioAutor) {
+                        res.status(403).json({ message: 'No tienes permiso para eliminar este comentario' });
+                        return;
+                    }
+                    // Eliminar el comentario
+                    pool.query('DELETE FROM COMENTARIO WHERE id_comentario = ? LIMIT 1', [comentarioId], (error) => {
+                        res.status(200).json({ message: 'Comentario eliminado exitosamente' });
+                    });
+                });
+            });
+        } catch (error) {
+            console.error('Error general al eliminar el comentario:', error);
+            res.status(500).json({ message: 'Error general al eliminar el comentario' });
+        }
+    }
+
+
+
+    
+
 }
 
 export const libroController = new LibroController();

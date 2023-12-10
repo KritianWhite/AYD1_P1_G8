@@ -104,6 +104,30 @@ class UsuariosController{
         }
     }
     
+    //GET - Devuelve la lista de descripcion del historial del usuario
+    public async Historial(req: Request, res: Response): Promise<void> {
+        try {
+            const {email} = req.params;
+            // Realiza la consulta 
+            pool.query(
+            'SELECT h.* FROM HISTORIAL h JOIN USUARIO u ON h.usuario = u.id_usuario WHERE u.email = ?',
+            [email],
+            (error, results) => {
+            // Verifica si hay resultados
+                if (results && results.length > 0) {
+                    res.json(results);
+                    console.log("historial:", results);
+                } else {
+                    res.json({}); // Enviar un JSON vacío 
+                    console.log("No se encontraron usuarios");
+                }
+            });
+        } catch (error) {
+            console.error('Error al obtener usuarios:', error);
+            res.status(500).json({ message: 'Error al obtener usuarios' });
+        }
+    }
+
 }
 
 export const usuariosController = new UsuariosController();

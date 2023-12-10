@@ -16,7 +16,8 @@ class UsuariosRoutes{
         this.router.post('/login/:email',usuariosController.Login); //login
         this.router.put('/cambiarPass/:email',usuariosController.CambiarPass); //actualiza la contraseña del email
         this.router.put('/modificarDatos/:email',usuariosController.ModificarDatos); //actualizar los datos del usuario
-        
+        this.router.put('/historial/:email',usuariosController.Historial); //obtiene todo el historial del usuario
+
     }
 }
 const usuariosRoutes = new UsuariosRoutes();
