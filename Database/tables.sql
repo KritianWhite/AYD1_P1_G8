@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS proyecto1.USUARIO (
     email VARCHAR(50) NOT NULL,
     passwordd VARCHAR(50) NOT NULL,
     fecha_nacimiento DATE NOT NULL,
-    administrador CHAR(1) NOT NULL,
+    administrador CHAR(1),
     PRIMARY KEY (id_usuario)
 );
 
