@@ -16,9 +16,10 @@ class LibroRoutes{
         this.router.post('/editar/:email/:titulo/', libroController.EditarLibro); //edita un libro por su titulo 
         this.router.post('/rentar/:email/:titulo/', libroController.RentaLibro); //usuario renta un libro
         this.router.get('/comprar/:email/:titulo/', libroController.ComprarLibro); //ususario compra un libro
+        this.router.get('/devolver/:email/:titulo/', libroController.DevolverLibro); //ususario devuelve un libro
         this.router.get('/comentarios/:titulo/', libroController.ListaComentarios); //retorna todos los comentarios del libro
         this.router.post('/escribirComentario/:email/:titulo/', libroController.IngresarComentario); //escribe un comentario al libro
-        this.router.get('/eliminarComentario/:email/:titulo/', libroController.EliminarComentario); //escribe un comentario al libro
+        this.router.get('/eliminarComentario/:email/:titulo/', libroController.EliminarComentario); //elimina un comentario al libro
         
     }
 }

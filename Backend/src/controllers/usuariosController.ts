@@ -26,7 +26,7 @@ class UsuariosController{
     public async Login(req: Request, res: Response): Promise<void> {
         try {
             const { email } = req.params;
-            const { pass } = req.body.Password;
+            const { pass } = req.body.password;
             // Realiza la consulta 
             pool.query('SELECT * FROM USUARIO WHERE email = ? AND passwordd = ?', [email, pass], (error, results) => {
                 // Verifica si hay resultados en el array devuelto
@@ -84,7 +84,7 @@ class UsuariosController{
     public async CambiarPass(req: Request, res: Response):Promise<void>{
         try{
             const {email} = req.params;
-            pool.query('UPDATE USUARIO SET passwordd = ? WHERE email = ?', [req.body, email]);
+            pool.query('UPDATE USUARIO SET passwordd = ? WHERE email = ?', [req.body.password, email]);
             res.json({message: 'Contraseña Actualizada'});    
         } catch (error) {
             console.error('Error al actualizar usuario:', error);
