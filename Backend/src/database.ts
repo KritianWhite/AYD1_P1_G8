@@ -1,16 +1,16 @@
-import mysql, { Pool, PoolConnection } from 'promise-mysql';
+import mysql, { PoolConnection } from 'mysql';
 import keys from './keys';
 
+// Configuración de la conexión
 const pool = mysql.createPool(keys.database);
 
-pool.then((poolInstance) => {
-    return poolInstance.getConnection() as Promise<PoolConnection>;
-  })
-  .then((connection) => {
-    console.log('Base de Datos Proyecto CONECTADA'); 
-  })
-  .catch((error) => {
-    console.error('Error al conectar a la base de datos:', error);
-  });
+// Obtener una conexión del pool
+pool.getConnection((err: mysql.MysqlError, connection: PoolConnection | undefined) => {
+  if (err) {
+    console.error('Error al conectar a la base de datos:', err.message);
+    return;
+  }
+  console.log('Base de Datos Proyecto CONECTADA');
+});
 
 export default pool;
