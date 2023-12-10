@@ -6,6 +6,9 @@ import cors from 'cors';
 import indexRoutes from './routes/indexRoutes';
 import pingRoutes from './routes/pingRoutes';
 import exp from 'constants';
+import usuariosRoutes from './routes/usuariosRoutes';
+import libroRoutes from './routes/libroRoutes';
+
 
 class Server {
 
@@ -28,6 +31,8 @@ class Server {
     routes():void {
         this.app.use('/', indexRoutes);
         this.app.use('/ping', pingRoutes);
+        this.app.use('/usuario', usuariosRoutes);
+        this.app.use('/libro', libroRoutes);
     }
 
     // Iniciar Servidor
