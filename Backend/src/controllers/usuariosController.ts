@@ -64,8 +64,8 @@ class UsuariosController{
 
     // get - ver perfil del usuario
     public async VerPerfil(req: Request, res: Response): Promise<void>{
-        const { email } = req.params;
         try {
+            const { email } = req.params;
             // Realiza la consulta 
             pool.query('SELECT * FROM USUARIO WHERE email = ?',[email], (error, results) => {
                 // Verifica si hay resultados
@@ -82,8 +82,8 @@ class UsuariosController{
     
     // put - Cambia la contraseña del usuario indicado
     public async CambiarPass(req: Request, res: Response):Promise<void>{
-        const {email} = req.params;
         try{
+            const {email} = req.params;
             pool.query('UPDATE USUARIO SET passwordd = ? WHERE email = ?', [req.body, email]);
             res.json({message: 'Contraseña Actualizada'});    
         } catch (error) {
@@ -94,8 +94,8 @@ class UsuariosController{
     
     
     public async ModificarDatos(req: Request,res: Response):Promise<void>{
-        const {email} = req.params;
         try{
+            const {email} = req.params;
             pool.query('UPDATE USUARIO SET ? WHERE email = ?',[req.body, email]);
             res.json({message: 'Datos Actualizados'});
         } catch (error) {
