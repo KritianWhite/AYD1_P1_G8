@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+
 import Service from "../services/Service.js";
-import './Styles/Login.css';
 import ImageComponent from '../components/ImageComponent';
+
+import './Styles/Login.css';
 
 var SHA256 = require("crypto-js/sha256");
 
@@ -22,7 +24,7 @@ const Login = () => {
 
 
   const getUsers = (e) => {
-    fetch("http://54.172.138.74:5000/api/getUsuarios", {
+    fetch("http://localhost:4000/usuario/", {
       method:"GET"
   })
   .then(res => res.json())
