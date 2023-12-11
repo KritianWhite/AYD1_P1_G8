@@ -101,7 +101,7 @@ const Registro = () => {
     <div className="container-registro">
       <form onSubmit={handleSubmit}>
         <Usuario />
-        <div>
+        <div className="div-form">
           <input
             type="text"
             value={name}
@@ -109,7 +109,7 @@ const Registro = () => {
             onChange={(event) => setName(event.target.value)}
           />
         </div>
-        <div>
+        <div className="div-form">
           <input
             type="text"
             value={lastName}
@@ -117,7 +117,7 @@ const Registro = () => {
             onChange={(event) => setApellido(event.target.value)}
           />
         </div>
-        <div>
+        <div className="div-form">
           <input
             type="text"
             value={numero}
@@ -125,7 +125,7 @@ const Registro = () => {
             onChange={(event) => setNumero(event.target.value)}
           />
         </div>
-        <div>
+        <div className="div-form">
           <input
             type="text"
             value={correo}
@@ -133,7 +133,7 @@ const Registro = () => {
             onChange={(event) => setCorreo(event.target.value)}
           />
         </div>
-        <div>
+        <div className="div-form">
           <input
             type="password"
             placeholder="Ingrese una contraseña"
@@ -147,7 +147,7 @@ const Registro = () => {
             </div>
           )}
         </div>
-        <div>
+        <div className="div-form">
           <input
             type="password"
             placeholder="Ingrese la confirmacion de su contraseña"
@@ -155,7 +155,7 @@ const Registro = () => {
             onChange={(event) => confirmsetPassword(event.target.value)}
           />
         </div>
-        <div>
+        <div className="div-form">
           <input
             type="date"
             value={fechaNacimiento}
