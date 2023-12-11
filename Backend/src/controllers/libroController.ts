@@ -11,14 +11,14 @@ class LibroController{
                 // Verifica si hay resultados
                 if (results && results.length > 0) {
                     res.json(results);
-                    console.log("libros:", results);
+                    //console.log("libros:", results);
                 } else {
-                    res.json({}); // Enviar un JSON vacío 
-                    console.log("No se encontraron libros");
+                    res.json({message: "No se encuentran libros"}); // Enviar un JSON vacío 
+                    //console.log("No se encontraron libros");
                 }
             });
         } catch (error) {
-            console.error('Error al obtener libros:', error);
+            //console.error('Error al obtener libros:', error);
             res.status(500).json({ message: 'Error al obtener libros' });
         }
     }
@@ -35,7 +35,7 @@ class LibroController{
                 }
             });
         } catch (error) {
-            console.error('Error en el proceso de publicacion del libro:', error);
+            //console.error('Error en el proceso de publicacion del libro:', error);
             res.status(500).json({ message: 'Error en el proceso de publicacion del libro' });
         }
     }
@@ -52,7 +52,7 @@ class LibroController{
                 }
             });
         } catch (error) {
-            console.error('Error en el proceso de eliminacion del libro:', error);
+            //console.error('Error en el proceso de eliminacion del libro:', error);
             res.status(500).json({ message: 'Error en el proceso de eliminacion del libro' });
         }
     }
