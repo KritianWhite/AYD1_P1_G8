@@ -1,5 +1,6 @@
 import {Request, Response} from 'express';
 import pool from "../database";
+import { corregirFormato } from '../utilidades';
 
 class UsuariosController{
     //GET - Devuelve la lista de todos los usuarios
@@ -25,10 +26,10 @@ class UsuariosController{
     // Post - Login
     public async Login(req: Request, res: Response): Promise<void> {
         try {
-            const { email } = req.params;
-            const { pass } = req.body.password;
+            const email  = corregirFormato(req.params.email);
+            const { password } = req.body;
             // Realiza la consulta 
-            pool.query('SELECT * FROM USUARIO WHERE email = ? AND passwordd = ?', [email, pass], (error, results) => {
+            pool.query('SELECT * FROM USUARIO WHERE email = ? AND passwordd = ?', [email, password], (error, results) => {
                 // Verifica si hay resultados en el array devuelto
                 if (results && results.length > 0) {
                     res.json(results[0]);
@@ -65,7 +66,7 @@ class UsuariosController{
     // get - ver perfil del usuario
     public async VerPerfil(req: Request, res: Response): Promise<void>{
         try {
-            const { email } = req.params;
+            const email  = corregirFormato(req.params.email);
             // Realiza la consulta 
             pool.query('SELECT * FROM USUARIO WHERE email = ?',[email], (error, results) => {
                 // Verifica si hay resultados
@@ -83,7 +84,7 @@ class UsuariosController{
     // put - Cambia la contraseña del usuario indicado
     public async CambiarPass(req: Request, res: Response):Promise<void>{
         try{
-            const {email} = req.params;
+            const email  = corregirFormato(req.params.email);
             pool.query('UPDATE USUARIO SET passwordd = ? WHERE email = ?', [req.body.password, email]);
             res.json({message: 'Contraseña Actualizada'});    
         } catch (error) {
@@ -95,7 +96,7 @@ class UsuariosController{
     
     public async ModificarDatos(req: Request,res: Response):Promise<void>{
         try{
-            const {email} = req.params;
+            const email  = corregirFormato(req.params.email);
             pool.query('UPDATE USUARIO SET ? WHERE email = ?',[req.body, email]);
             res.json({message: 'Datos Actualizados'});
         } catch (error) {
@@ -107,7 +108,7 @@ class UsuariosController{
     //GET - Devuelve la lista de descripcion del historial del usuario
     public async Historial(req: Request, res: Response): Promise<void> {
         try {
-            const {email} = req.params;
+            const email  = corregirFormato(req.params.email);
             // Realiza la consulta 
             pool.query(
             'SELECT h.* FROM HISTORIAL h JOIN USUARIO u ON h.usuario = u.id_usuario WHERE u.email = ?',
