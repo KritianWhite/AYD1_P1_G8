@@ -2,7 +2,7 @@ export default{
     database : {
         host: 'localhost',
         user: 'root',
-        password: 'password',
+        password: '201901055',
         database: 'proyecto1'
     }
 }
