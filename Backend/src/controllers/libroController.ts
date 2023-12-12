@@ -13,13 +13,31 @@ class LibroController{
                     res.json(results);
                     //console.log("libros:", results);
                 } else {
-                    res.json({message: "No se encuentran libros"}); // Enviar un JSON vacío 
-                    //console.log("No se encontraron libros");
+                    res.json({message: "No se encontraron libros"}); // Enviar un JSON vacío 
                 }
             });
         } catch (error) {
             //console.error('Error al obtener libros:', error);
             res.status(500).json({ message: 'Error al obtener libros' });
+        }
+    }
+
+     //GET - libro por el titulo
+     public async Libro(req: Request, res: Response): Promise<void> {
+        try {
+            const titulo = corregirFormato(req.params.titulo);
+            // Realiza la consulta 
+            pool.query('SELECT * FROM LIBRO WHERE titulo = ?',[titulo], (error, results) => {
+                // Verifica si hay resultados
+                if (results && results.length > 0) {
+                    res.json(results[0]);
+                } else {
+                    res.json({message: "No se encontraron libros"}); // Enviar un JSON vacío 
+                }
+            });
+        } catch (error) {
+            //console.error('Error al obtener el libro:', error);
+            res.status(500).json({ message: 'Error al obtener el libro' });
         }
     }
 
@@ -70,7 +88,7 @@ class LibroController{
                 }
             });
         } catch (error) {
-            console.error('Error en el proceso de eliminacion del libro:', error);
+           // console.error('Error en el proceso de eliminacion del libro:', error);
             res.status(500).json({ message: 'Error en el proceso de eliminacion del libro' });
         }
     }
@@ -101,7 +119,7 @@ class LibroController{
             pool.query('INSERT INTO HISTORIAL (descripcion, usuario) VALUES (?, ?)',[`Libro '${titulo}' rentado`, idUsuario]);
             res.json({ message: 'Libro rentado' });
             } catch (error) {
-            console.error('Error en rentar el libro:', error);
+            //console.error('Error en rentar el libro:', error);
             res.status(500).json({ message: 'Error en rentar el libro' });
         }
     }
@@ -129,7 +147,7 @@ class LibroController{
             pool.query('INSERT INTO HISTORIAL (descripcion, usuario) VALUES (?, ?)',[`Libro '${titulo}' comprado`, idUsuario]);
             res.json({ message: 'Libro comprado' });
             } catch (error) {
-            console.error('Error en comprar el libro:', error);
+            //console.error('Error en comprar el libro:', error);
             res.status(500).json({ message: 'Error en comprar el libro' });
         }
     }
@@ -157,7 +175,7 @@ class LibroController{
             pool.query('INSERT INTO HISTORIAL (descripcion, usuario) VALUES (?, ?)',[`Libro '${titulo}' devuelto`, idUsuario]);
             res.json({ message: 'Libro devuelto' });
             } catch (error) {
-            console.error('Error en devolver el libro:', error);
+            //console.error('Error en devolver el libro:', error);
             res.status(500).json({ message: 'Error en devolver el libro' });
         }
     }
@@ -173,15 +191,15 @@ class LibroController{
                     // Verifica si hay resultados
                     if (results && results.length > 0) {
                         res.json(results);
-                        console.log("Comentarios del libro:", results);
+                        //console.log("Comentarios del libro:", results);
                     } else {
-                        res.json({}); // Enviar un JSON vacío 
-                        console.log("No se encontraron comentarios para el libro");
+                        res.json({message: "No se encontraron comentarios para el libro"}); 
+                     //   console.log("");
                     }
                 }
             );
         } catch (error) {
-            console.error('Error al obtener los comentarios del libro:', error);
+            //console.error('Error al obtener los comentarios del libro:', error);
             res.status(500).json({ message: 'Error al obtener los comentarios del libro' });
         }
     }
@@ -211,7 +229,7 @@ class LibroController{
             });
             
         } catch (error) {
-            console.error('Error en rentar el libro:', error);
+            //console.error('Error en rentar el libro:', error);
             res.status(500).json({ message: 'Error en rentar el libro' });
         }
     }
@@ -248,7 +266,7 @@ class LibroController{
                 });
             });
         } catch (error) {
-            console.error('Error general al eliminar el comentario:', error);
+            //console.error('Error general al eliminar el comentario:', error);
             res.status(500).json({ message: 'Error general al eliminar el comentario' });
         }
     }

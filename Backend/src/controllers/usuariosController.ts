@@ -13,11 +13,10 @@ class UsuariosController{
                     //console.log("usuarios:", results);
                 } else {
                     res.json({message: "No se encontraron usuarios"}); // Enviar un JSON vacío 
-                //console.log("No se encontraron usuarios");
                 }
             });
         } catch (error) {
-            //console.error('Error al obtener usuarios:', error);
+           // console.error('Error al obtener usuarios:', error);
             res.status(500).json({ message: 'Error al obtener usuarios' });
         }
     }

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "test": "jest --detectOpenHandles --forceExit --coverage",
+    "test": "set NODE_OPTIONS=--experimental-vm-modules && npx jest --detectOpenHandles --forceExit --coverage",
     "start": "ts-node src/index.ts",
     "build": "tsc"
   },

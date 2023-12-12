@@ -23,9 +23,15 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
+<<<<<<< Updated upstream
                 <span class="strong">10.71% </span>
                 <span class="quiet">Statements</span>
                 <span class='fraction'>6/56</span>
+=======
+                <span class="strong">12.28% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>7/57</span>
+>>>>>>> Stashed changes
             </div>
         
             
@@ -44,9 +50,15 @@
         
             
             <div class='fl pad1y space-right2'>
+<<<<<<< Updated upstream
                 <span class="strong">10.71% </span>
                 <span class="quiet">Lines</span>
                 <span class='fraction'>6/56</span>
+=======
+                <span class="strong">12.28% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>7/57</span>
+>>>>>>> Stashed changes
             </div>
         
             
@@ -196,7 +208,12 @@
 <a name='L131'></a><a href='#L131'>131</a>
 <a name='L132'></a><a href='#L132'>132</a>
 <a name='L133'></a><a href='#L133'>133</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<<<<<<< Updated upstream
 <span class="cline-any cline-yes">2x</span>
+=======
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+>>>>>>> Stashed changes
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -214,7 +231,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<<<<<<< Updated upstream
 <span class="cline-any cline-neutral">&nbsp;</span>
+=======
+>>>>>>> Stashed changes
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -327,8 +347,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<<<<<<< Updated upstream
 <span class="cline-any cline-yes">2x</span></td><td class="text"><pre class="prettyprint lang-js">import {Request, Response} from 'express';
 import pool from "../database";
+=======
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import {Request, Response} from 'express';
+import pool from "../database";
+import { corregirFormato } from '../utilidades';
+>>>>>>> Stashed changes
 &nbsp;
 class UsuariosController{
     //GET - Devuelve la lista de todos los usuarios
@@ -342,11 +368,18 @@ class UsuariosController{
                     //console.log("usuarios:", results);
                 } else <span class="missing-if-branch" title="else path not taken" >E</span>{
 <span class="cstat-no" title="statement not covered" >                    res.json({message: "No se encontraron usuarios"}); </span>// Enviar un JSON vacío 
+<<<<<<< Updated upstream
                 //console.log("No se encontraron usuarios");
                 }
             });
         } catch (error) {
             //console.error('Error al obtener usuarios:', error);
+=======
+                }
+            });
+        } catch (error) {
+           // console.error('Error al obtener usuarios:', error);
+>>>>>>> Stashed changes
 <span class="cstat-no" title="statement not covered" >            res.status(500).json({ message: 'Error al obtener usuarios' });</span>
         }
     }
@@ -354,10 +387,17 @@ class UsuariosController{
     // Post - Login
     public async <span class="fstat-no" title="function not covered" >Login(</span>req: Request, res: Response): Promise&lt;void&gt; {
 <span class="cstat-no" title="statement not covered" >        try {</span>
+<<<<<<< Updated upstream
             const { email } = <span class="cstat-no" title="statement not covered" >req.params;</span>
             const { pass } = <span class="cstat-no" title="statement not covered" >req.body.password;</span>
             // Realiza la consulta 
 <span class="cstat-no" title="statement not covered" >            pool.query('SELECT * FROM USUARIO WHERE email = ? AND passwordd = ?', [email, pass], <span class="fstat-no" title="function not covered" >(e</span>rror, results) =&gt; {</span>
+=======
+            const email  = <span class="cstat-no" title="statement not covered" >corregirFormato(req.params.email);</span>
+            const { password } = <span class="cstat-no" title="statement not covered" >req.body;</span>
+            // Realiza la consulta 
+<span class="cstat-no" title="statement not covered" >            pool.query('SELECT * FROM USUARIO WHERE email = ? AND passwordd = ?', [email, password], <span class="fstat-no" title="function not covered" >(e</span>rror, results) =&gt; {</span>
+>>>>>>> Stashed changes
                 // Verifica si hay resultados en el array devuelto
 <span class="cstat-no" title="statement not covered" >                if (results &amp;&amp; results.length &gt; 0) {</span>
 <span class="cstat-no" title="statement not covered" >                    res.json(results[0]);</span>
@@ -394,7 +434,11 @@ class UsuariosController{
     // get - ver perfil del usuario
     public async <span class="fstat-no" title="function not covered" >VerPerfil(</span>req: Request, res: Response): Promise&lt;void&gt;{
 <span class="cstat-no" title="statement not covered" >        try {</span>
+<<<<<<< Updated upstream
             const { email } = <span class="cstat-no" title="statement not covered" >req.params;</span>
+=======
+            const email  = <span class="cstat-no" title="statement not covered" >corregirFormato(req.params.email);</span>
+>>>>>>> Stashed changes
             // Realiza la consulta 
 <span class="cstat-no" title="statement not covered" >            pool.query('SELECT * FROM USUARIO WHERE email = ?',[email], <span class="fstat-no" title="function not covered" >(e</span>rror, results) =&gt; {</span>
                 // Verifica si hay resultados
@@ -412,7 +456,11 @@ class UsuariosController{
     // put - Cambia la contraseña del usuario indicado
     public async <span class="fstat-no" title="function not covered" >CambiarPass(</span>req: Request, res: Response):Promise&lt;void&gt;{
 <span class="cstat-no" title="statement not covered" >        try{</span>
+<<<<<<< Updated upstream
             const {email} = <span class="cstat-no" title="statement not covered" >req.params;</span>
+=======
+            const email  = <span class="cstat-no" title="statement not covered" >corregirFormato(req.params.email);</span>
+>>>>>>> Stashed changes
 <span class="cstat-no" title="statement not covered" >            pool.query('UPDATE USUARIO SET passwordd = ? WHERE email = ?', [req.body.password, email]);</span>
 <span class="cstat-no" title="statement not covered" >            res.json({message: 'Contraseña Actualizada'});    </span>
         } catch (error) {
@@ -424,7 +472,11 @@ class UsuariosController{
     
     public async <span class="fstat-no" title="function not covered" >ModificarDatos(</span>req: Request,res: Response):Promise&lt;void&gt;{
 <span class="cstat-no" title="statement not covered" >        try{</span>
+<<<<<<< Updated upstream
             const {email} = <span class="cstat-no" title="statement not covered" >req.params;</span>
+=======
+            const email  = <span class="cstat-no" title="statement not covered" >corregirFormato(req.params.email);</span>
+>>>>>>> Stashed changes
 <span class="cstat-no" title="statement not covered" >            pool.query('UPDATE USUARIO SET ? WHERE email = ?',[req.body, email]);</span>
 <span class="cstat-no" title="statement not covered" >            res.json({message: 'Datos Actualizados'});</span>
         } catch (error) {
@@ -436,7 +488,11 @@ class UsuariosController{
     //GET - Devuelve la lista de descripcion del historial del usuario
     public async <span class="fstat-no" title="function not covered" >Historial(</span>req: Request, res: Response): Promise&lt;void&gt; {
 <span class="cstat-no" title="statement not covered" >        try {</span>
+<<<<<<< Updated upstream
             const {email} = <span class="cstat-no" title="statement not covered" >req.params;</span>
+=======
+            const email  = <span class="cstat-no" title="statement not covered" >corregirFormato(req.params.email);</span>
+>>>>>>> Stashed changes
             // Realiza la consulta 
 <span class="cstat-no" title="statement not covered" >            pool.query(</span>
             'SELECT h.* FROM HISTORIAL h JOIN USUARIO u ON h.usuario = u.id_usuario WHERE u.email = ?',
@@ -466,7 +522,11 @@ export const usuariosController = new UsuariosController();</pre></td></tr></tab
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+<<<<<<< Updated upstream
                 at 2023-12-11T00:50:55.831Z
+=======
+                at 2023-12-11T23:56:20.939Z
+>>>>>>> Stashed changes
             </div>
         <script src="../../prettify.js"></script>
         <script>
