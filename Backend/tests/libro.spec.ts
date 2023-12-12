@@ -47,15 +47,8 @@ describe('GET - Libro', () => {
         const response = await supertest(app).get(`/libro/comentarios/${encodeURIComponent(titulo)}`);
         expect(response.status).toBe(200);
         expect(response.body.message).not.toBe('Error al obtener los comentarios del libro');
-    });
-
-
-    
+    }); 
 });
-
-
-
-
 
 describe('GET - Usuario', () => {
     test('Obtiene la lista de todos los usuarios', async () => {
@@ -70,6 +63,14 @@ describe('GET - Usuario', () => {
         const response = await supertest(app).get(`/usuario/verperfil/${encodeURIComponent(email)}`);
         expect(response.status).toBe(200);
         expect(response.body.message).not.toBe('Error al obtener usuarios');
+    });
+
+    test('Obtiene todo el historial del usuario', async () => {
+        const email = 'prueba@gmail.com';
+        const titulo = 'Prueba';
+        const response = await supertest(app).get(`/usuario/historial/${encodeURIComponent(email)}`);
+        expect(response.status).toBe(200);
+        expect(response.body.message).not.toBe('No se encontraron usuarios');
     });
 });
 
@@ -152,6 +153,23 @@ describe('POST - Libro', () => {
         expect(response.body.message).toBe('Comentario agregado');
         //expect(response.body.data).toBeDefined(); // Puedes ajustar según la estructura de tu respuesta
     });
+
+
+    test('Elimina un comentario del libro', async () => {
+        const email = 'prueba@gmail.com';
+        const datosLibro = {
+            comentario: "buen libro de prueba"
+        };
+        const titulo = 'Prueba';
+
+        const response = await supertest(app)
+            .post(`/libro/eliminarComentario/${encodeURIComponent(email)}/${encodeURIComponent(titulo)}`)
+            .send(datosLibro);
+
+        expect(response.status).toBe(200);
+        expect(response.body.message).not.toBe('Error al eliminar el comentario');
+        //expect(response.body.data).toBeDefined(); // Puedes ajustar según la estructura de tu respuesta
+    });	
 });
 
 describe('POST - Usuario', () => {
@@ -195,7 +213,6 @@ describe('POST - Usuario', () => {
         expect(response.body.message).not.toBe('Usuario o Contraseña Incorrectos');
         //expect(response.body.data).toBeDefined(); // Puedes ajustar según la estructura de tu respuesta
     });
-
 });
 
 
@@ -237,6 +254,4 @@ describe('PUT - Usuario', () => {
         expect(response.body.message).toBe('Datos Actualizados');
         // Puedes agregar más aserciones según la estructura de tu respuesta
     });
-
-
 });

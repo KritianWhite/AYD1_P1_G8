@@ -239,13 +239,8 @@ class LibroController{
                 }
             });
         } catch (error) {
-<<<<<<< HEAD
-            //console.error('Error en rentar el libro:', error);
-            res.status(500).json({ message: 'Error en rentar el libro' });
-=======
-            console.error('Error en ingresar comentario:', error);
+           // console.error('Error en ingresar comentario:', error);
             res.status(500).json({ message: 'Error en ingresar comentario' });
->>>>>>> feature-201901055
         }
     }
 
@@ -270,7 +265,7 @@ class LibroController{
                 [comentario, email, titulo],
                 (error) => {
                     if (error) {
-                        console.error('Error al eliminar el comentario:', error);
+                       // console.error('Error al eliminar el comentario:', error);
                         res.status(500).json({ message: 'Error al eliminar el comentario' });
                     } else {
                         res.status(200).json({ message: 'Comentario eliminado exitosamente' });
