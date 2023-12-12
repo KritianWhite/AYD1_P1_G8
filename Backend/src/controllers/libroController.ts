@@ -1,5 +1,6 @@
 import {Request, Response} from 'express';
 import pool from "../database";
+import { corregirFormato } from '../utilidades';
 
 class LibroController{
     
@@ -32,11 +33,20 @@ class LibroController{
                 if (results && results.length > 0) {
                     res.json(results[0]);
                 } else {
+<<<<<<< HEAD
                     res.json({message: "No se encontraron libros"}); // Enviar un JSON vacío 
                 }
             });
         } catch (error) {
             //console.error('Error al obtener el libro:', error);
+=======
+                    res.json({}); // Enviar un JSON vacío 
+                    console.log("No se encontraron libros");
+                }
+            });
+        } catch (error) {
+            console.error('Error al obtener el libro:', error);
+>>>>>>> feature-201901055
             res.status(500).json({ message: 'Error al obtener el libro' });
         }
     }
@@ -44,7 +54,7 @@ class LibroController{
     // post - publicar libro - verifica que sea admin 
     public async PublicarLibro(req: Request, res: Response): Promise<void> {
         try {
-            const { email } = req.params;
+            const email  = corregirFormato(req.params.email);
             pool.query('SELECT * FROM USUARIO WHERE email = ? AND administrador = 1', [email], (error, results) => {
                 // Verifica si hay resultados 
                 if (results.length > 0) {
@@ -61,7 +71,8 @@ class LibroController{
     // get - Eliminar libro - verifica que sea admin 
     public async EliminarLibro(req: Request, res: Response): Promise<void> {
         try {
-            const { email, titulo } = req.params;
+            const email  = corregirFormato(req.params.email);
+            const titulo  = corregirFormato(req.params.titulo);
             pool.query('SELECT * FROM USUARIO WHERE email = ? AND administrador = 1', [email], (error, results) => {
                 // Verifica si hay resultados 
                 if (results.length > 0) {
@@ -78,7 +89,8 @@ class LibroController{
     // post - Editar libro - verifica que sea admin 
     public async EditarLibro(req: Request, res: Response): Promise<void> {
         try {
-            const { email, titulo } = req.params;
+            const email  = corregirFormato(req.params.email);
+            const titulo  = corregirFormato(req.params.titulo);
             const { tituloEditar } = req.body.titulo;
             pool.query('SELECT * FROM USUARIO WHERE email = ? AND administrador = 1', [email], (error, results) => {
                 // Verifica si hay resultados 
@@ -96,7 +108,8 @@ class LibroController{
     // post - Rentar libro 
     public async RentaLibro(req: Request, res: Response): Promise<void> {
         try {
-            const { email, titulo } = req.params;
+            const email  = corregirFormato(req.params.email);
+            const titulo  = corregirFormato(req.params.titulo);
             const { fecha_devolucion } = req.body.fecha_devolucion;
             var idUsuario,idLibro;
             // Obtener id_usuario e id_libro
@@ -127,7 +140,8 @@ class LibroController{
     // get - Comprar libro 
     public async ComprarLibro(req: Request, res: Response): Promise<void> {
         try {
-            const { email, titulo } = req.params;
+            const email  = corregirFormato(req.params.email);
+            const titulo  = corregirFormato(req.params.titulo);
             var idUsuario,idLibro;
             // Obtener id_usuario e id_libro
             pool.query('SELECT id_usuario, id_libro FROM USUARIO, LIBRO WHERE email = ? AND titulo = ?',
@@ -155,7 +169,8 @@ class LibroController{
      // get - Devolver libro 
      public async DevolverLibro(req: Request, res: Response): Promise<void> {
         try {
-            const { email, titulo } = req.params;
+            const email  = corregirFormato(req.params.email);
+            const titulo  = corregirFormato(req.params.titulo);
             var idUsuario,idLibro;
             // Obtener id_usuario e id_libro
             pool.query('SELECT id_usuario, id_libro FROM USUARIO, LIBRO WHERE email = ? AND titulo = ?',
@@ -183,7 +198,7 @@ class LibroController{
     // GET - todos los comentarios del libro
     public async ListaComentarios(req: Request, res: Response): Promise<void> {
         try {
-            const { titulo } = req.params;
+            const titulo  = corregirFormato(req.params.titulo);
             // Realiza la consulta 
             pool.query(
                 'SELECT COMENTARIO.* FROM COMENTARIO JOIN LIBRO ON COMENTARIO.libro = LIBRO.id_libro WHERE LIBRO.titulo = ?',
@@ -207,7 +222,8 @@ class LibroController{
     // post - Escribir comentario a un libro 
     public async IngresarComentario(req: Request, res: Response): Promise<void> {
         try {
-            const { email, titulo } = req.params;
+            const email  = corregirFormato(req.params.email);
+            const titulo  = corregirFormato(req.params.titulo);
             const { comentario } = req.body.comentario;
             var idUsuario,idLibro;
             // Obtener id_usuario e id_libro
@@ -237,7 +253,7 @@ class LibroController{
      // POST - Eliminar comentario -tiene que ser el autor del comentario
     public EliminarComentario(req: Request, res: Response): void {
         try {
-            const { email } = req.params;
+            const email  = corregirFormato(req.params.email);
             const { comentarioId } = req.body;
 
             // Obtener id_usuario del usuario que realiza la solicitud
@@ -271,9 +287,6 @@ class LibroController{
         }
     }
 
-
-
-    
 
 }
 

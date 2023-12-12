@@ -11,6 +11,7 @@ class LibroRoutes{
 
     config(): void {
         this.router.get('/', libroController.ListaLibros); //retorna todos los libros 
+        this.router.get('/:titulo', libroController.Libro); //retorna el libros por el titulo
         this.router.post('/publicar/:email', libroController.PublicarLibro); //inserta un libro nuevo
         this.router.get('/eliminar/:email/:titulo', libroController.EliminarLibro); //eliminar un libro por el titulo
         this.router.post('/editar/:email/:titulo/', libroController.EditarLibro); //edita un libro por su titulo 
