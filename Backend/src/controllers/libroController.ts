@@ -33,20 +33,12 @@ class LibroController{
                 if (results && results.length > 0) {
                     res.json(results[0]);
                 } else {
-<<<<<<< HEAD
                     res.json({message: "No se encontraron libros"}); // Enviar un JSON vacío 
+                    //console.log("No se encontraron libros");
                 }
             });
         } catch (error) {
             //console.error('Error al obtener el libro:', error);
-=======
-                    res.json({}); // Enviar un JSON vacío 
-                    console.log("No se encontraron libros");
-                }
-            });
-        } catch (error) {
-            console.error('Error al obtener el libro:', error);
->>>>>>> feature-201901055
             res.status(500).json({ message: 'Error al obtener el libro' });
         }
     }
@@ -96,12 +88,12 @@ class LibroController{
                 // Verifica si hay resultados 
                 if (results.length > 0) {
                     pool.query('UPDATE LIBRO SET ? WHERE titulo = ? LIMIT 1;', [titulo,tituloEditar]);
-                    res.json({ message: 'Libro eliminado' });
+                    res.json({ message: 'Libro editado correctamente' });
                 }
             });
         } catch (error) {
            // console.error('Error en el proceso de eliminacion del libro:', error);
-            res.status(500).json({ message: 'Error en el proceso de eliminacion del libro' });
+            res.status(500).json({ message: 'Error en el proceso de actualziacion del libro' });
         }
     }
 

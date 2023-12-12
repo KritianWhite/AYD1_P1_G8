@@ -39,7 +39,7 @@ class UsuariosController{
                 }
             });
         } catch (error) {
-            console.error('Error en el proceso de inicio de sesión:', error);
+            //console.error('Error en el proceso de inicio de sesión:', error);
             res.status(500).json({ message: 'Error en el proceso de inicio de sesión' });
         }
     }
@@ -56,7 +56,7 @@ class UsuariosController{
                 }
             });
         } catch (error) {
-            console.error('Error en el proceso de registro de usuario:', error);
+           // console.error('Error en el proceso de registro de usuario:', error);
             res.status(500).json({ message: 'Error en el proceso de registro de usuario' });
         }
     }
@@ -74,7 +74,7 @@ class UsuariosController{
                 }
             });
         } catch (error) {
-            console.error('Error al obtener usuarios:', error);
+            //console.error('Error al obtener usuarios:', error);
             res.status(500).json({ message: 'Error al obtener usuarios' });
         }
 
@@ -87,7 +87,7 @@ class UsuariosController{
             pool.query('UPDATE USUARIO SET passwordd = ? WHERE email = ?', [req.body.password, email]);
             res.json({message: 'Contraseña Actualizada'});    
         } catch (error) {
-            console.error('Error al actualizar usuario:', error);
+            //console.error('Error al actualizar usuario:', error);
             res.status(500).json({ message: 'Error al actualizar usuario' });
         }
     }
@@ -116,14 +116,13 @@ class UsuariosController{
             // Verifica si hay resultados
                 if (results && results.length > 0) {
                     res.json(results);
-                    console.log("historial:", results);
+                   // console.log("historial:", results);
                 } else {
-                    res.json({}); // Enviar un JSON vacío 
-                    console.log("No se encontraron usuarios");
+                    res.json({message: "No se encontraron usuarios"}); // Enviar un JSON vacío 
                 }
             });
         } catch (error) {
-            console.error('Error al obtener usuarios:', error);
+           // console.error('Error al obtener usuarios:', error);
             res.status(500).json({ message: 'Error al obtener usuarios' });
         }
     }
