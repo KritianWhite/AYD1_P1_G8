@@ -17,6 +17,7 @@ class UsuariosRoutes{
         this.router.put('/cambiarPass/:email',usuariosController.CambiarPass); //actualiza la contraseña del email
         this.router.put('/modificarDatos/:email',usuariosController.ModificarDatos); //actualizar los datos del usuario
         this.router.get('/historial/:email',usuariosController.Historial); //obtiene todo el historial del usuario
+        //this.router.get('/librosrentados/:email',usuariosController.Historial); //Obtinene todo los libros que tiene rentado
 
     }
 }
