@@ -12,11 +12,11 @@ https://drive.google.com/drive/folders/1mOHFWy0TiQ4NJ8ejB9PZJdYUwIRNmDfU?usp=sha
 ### **MODELO CONCEPTUAL**
 ![conceptual](../Database/Modelo/conceptual.png)
 ### **MODELO LOGICO**
-![logico](../Database/Modelo/logical.png)
+![logico](../Database/Modelo/Logical.png)
 ### **MODELO FISICO**
 ![fisico](../Database/Modelo/Relational.png)
 ## **DIAGRAMA DE CASOS DE USOS**
-![caso_uso](./caso_usos.jpg )
+![caso_uso](./Casos_usos.jpg )
 ## **CASOS DE USOS DE ALTO NIVEL**
 
 | Caso de uso  | CDU-001 Login      |

@@ -129,6 +129,29 @@ class UsuariosController{
         }
     }
 
+    //GET - Devuelve la lista de descripcion del historial del usuario
+    public async LibrosRentados(req: Request, res: Response): Promise<void> {
+        try {
+            const email  = corregirFormato(req.params.email);
+            // Realiza la consulta 
+            pool.query(
+            'SELECT L.* FROM proyecto1.RENTA R JOIN proyecto1.LIBRO L ON R.libro = L.id_libro JOIN proyecto1.USUARIO U ON R.usuario = U.id_usuario WHERE U.email = ?',
+            [email],
+            (error, results) => {
+            // Verifica si hay resultados
+                if (results && results.length > 0) {
+                    res.json(results);
+                } else {
+                    res.json({}); // Enviar un JSON vacío 
+                    console.log("No se encontraron libros rentados");
+                }
+            });
+        } catch (error) {
+            console.error('Error al obtener los libros rentados:', error);
+            res.status(500).json({ message: 'Error al obtener los libros rentados' });
+        }
+    }
+
 }
 
 export const usuariosController = new UsuariosController();
