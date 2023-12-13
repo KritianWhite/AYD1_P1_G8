@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2";
+
 import Usuario from "../components/Usuario";
+
 import "./Styles/Registro.css";
 
 const Registro = () => {
@@ -22,39 +25,44 @@ const Registro = () => {
   const registrar = () => {
     var nombre = name;
     var apellido = lastName;
-    var numeroTelefono = numero;
-    var correoElectronico = correo;
-    var contra = password;
-    var contra2 = confirmpassword;
-    var fecha = fechaNacimiento;
+    var telefono = numero;
+    var email = correo;
+    var passwordd = password;
+    var passwordd2 = confirmpassword;
+    var fecha_nacimiento = fechaNacimiento;
 
     // Verificar si algún campo está vacío
     if (
       nombre.trim() === "" ||
       apellido.trim() === "" ||
-      numeroTelefono.trim() === "" ||
-      correoElectronico.trim() === "" ||
-      contra.trim() === "" ||
-      contra2.trim() === "" ||
-      fecha.trim() === ""
+      telefono.trim() === "" ||
+      email.trim() === "" ||
+      passwordd.trim() === "" ||
+      passwordd2.trim() === "" ||
+      fecha_nacimiento.trim() === ""
     ) {
-      alert("Por favor, complete todos los campos.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Campos vacios, por favor llenar todos los campos.",
+      });
     } else {
       if (isValidPassword) {
         if (password === confirmpassword) {
           var Usuario = {
             nombre,
             apellido,
-            numeroTelefono,
-            correoElectronico,
-            contra,
-            contra2,
-            fecha,
+            telefono,
+            email,
+            passwordd,
+            fecha_nacimiento,
+            administrador:0,
           };
-          fetch("", {
+          fetch("http://localhost:4000/usuario/registrar", {
             method: "POST",
             body: JSON.stringify(Usuario),
             headers: { "Content-type": "application/json;charset=UTF-8" },
+
           })
             .then((res) => res.json())
             .catch((err) => {
@@ -62,28 +70,49 @@ const Registro = () => {
             })
             .then((response) => {
               if (response) {
-                alert(
-                  "El usuario " +
-                    nombre +
-                    apellido +
-                    " fue registrado con exito."
-                );
+                const Toast = Swal.mixin({
+                  toast: true,
+                  position: "top-end",
+                  showConfirmButton: false,
+                  timer: 1500,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                  }
+                });
+                Toast.fire({
+                  icon: "success",
+                  title: "Agregado con exito."
+                }); 
+                window.location.href = "http://localhost:3000/";
               } else {
-                alert("Error: Hubo un error inesperado, intentelo denuevo.");
+                Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "Ocurrion un error inesperado, intentelo denuevo.",
+                });
               }
             });
+            console.log(Usuario)
         } else {
-          alert("Las contaseñas no coinciden, revise e intentelo denuevo.");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Las contaseñas no coinciden, revise e intentelo denuevo.",
+          });
         }
       } else {
-        alert(
-          "Las contaseña debe de contener minimo 8 caracteres, una mayuscula y un numero."
-        );
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Las contaseña debe de contener minimo 8 caracteres, una mayuscula y un numero.",
+        });
       }
     }
   };
 
-  // Validacion de contraseña
+  // Validacion de passworddseña
   const handlePasswordChange = (event) => {
     const newPassword = event.target.value;
     setPassword(newPassword);
@@ -142,8 +171,6 @@ const Registro = () => {
           />
           {!isValidPassword && (
             <div style={{ color: "red"}}>
-              La contraseña debe tener al menos 8 caracteres, incluir una
-              mayúscula y un número.
             </div>
           )}
         </div>

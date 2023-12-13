@@ -88,12 +88,12 @@ class LibroController{
             pool.query('SELECT * FROM USUARIO WHERE email = ? AND administrador = 1', [email], (error, results) => {
                 // Verifica si hay resultados 
                 if (results.length > 0) {
-                    pool.query('UPDATE LIBRO SET ? WHERE titulo = ? LIMIT 1;', [titulo,tituloEditar]);
-                    res.json({ message: 'Libro eliminado' });
+                    pool.query('UPDATE LIBRO SET ? WHERE titulo = ? LIMIT 1;', [req.body,titulo]);
+                    res.json({ message: 'Libro editado' });
                 }
             });
         } catch (error) {
-            console.error('Error en el proceso de eliminacion del libro:', error);
+            console.error('Error en el proceso de edicion del libro:', error);
             res.status(500).json({ message: 'Error en el proceso de eliminacion del libro' });
         }
     }
