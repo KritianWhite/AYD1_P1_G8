@@ -17,6 +17,8 @@ class UsuariosRoutes{
         this.router.put('/cambiarPass/:email',usuariosController.CambiarPass); //actualiza la contraseña del email
         this.router.put('/modificarDatos/:email',usuariosController.ModificarDatos); //actualizar los datos del usuario
         this.router.get('/historial/:email',usuariosController.Historial); //obtiene todo el historial del usuario
+        this.router.get('/librosrentados/:email',usuariosController.LibrosRentados); //Obtinene todo los libros que tiene rentado
+        this.router.post('/eliminar/:email',usuariosController.EliminarUsuario); //Eliminar el usuario por medio de su email
 
     }
 }
