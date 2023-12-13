@@ -152,6 +152,31 @@ class UsuariosController{
         }
     }
 
+    // post - Eliminar usuario - verifica que sea admin 
+    public async EliminarUsuario(req: Request, res: Response): Promise<void> {
+        try {
+            const email  = corregirFormato(req.params.email);
+            //verifica si es administrador el que hace la operacion 
+            pool.query('SELECT * FROM USUARIO WHERE email = ? AND administrador = 1', [email], (error, results) => {
+                // Verifica si hay resultados 
+                if (results.length > 0) {
+                    pool.query('SET SQL_SAFE_UPDATES = 0');
+                    pool.query('DELETE FROM proyecto1.RENTA WHERE usuario = (SELECT id_usuario FROM proyecto1.USUARIO WHERE email = ?)', [req.body.email]);
+                    pool.query('DELETE FROM proyecto1.COMENTARIO WHERE usuario = (SELECT id_usuario FROM proyecto1.USUARIO WHERE email = ?)', [req.body.email]);
+                    pool.query('DELETE FROM proyecto1.HISTORIAL WHERE usuario = (SELECT id_usuario FROM proyecto1.USUARIO WHERE email = ?)', [req.body.email]);
+                    pool.query('DELETE FROM proyecto1.USUARIO WHERE email = ?', [req.body.email]);
+                    pool.query('SET SQL_SAFE_UPDATES = 1');
+                    res.json({ message: 'Usuario eliminado' });
+                }else{
+                    res.status(404).json({ message: 'Usuario no encontrado o no se pudo eliminar' });
+                }
+            });
+        } catch (error) {
+            console.error('Error en el proceso de eliminacion de usuario:', error);
+            res.status(500).json({ message: 'Error en el proceso de eliminacion de usuario' });
+        }
+    }
+
 }
 
 export const usuariosController = new UsuariosController();
