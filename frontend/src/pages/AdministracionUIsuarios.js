@@ -147,7 +147,6 @@ export default function AdmnistracionUsuarios() {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          
           swalWithBootstrapButtons.fire({
             title: "Eliminado!",
             text: "El usuario ha sido eliminado correctamente.",
@@ -184,7 +183,7 @@ export default function AdmnistracionUsuarios() {
 
   return (
     <>
-      <div className="container text-center">
+      <div className="container-libros">
         <Navbar />
         <div className="tabla-libros-administrador">
           <h1>TABLA DE USUARIOS</h1>

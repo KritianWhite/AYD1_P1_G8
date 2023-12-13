@@ -241,10 +241,7 @@ export default function AdmnistracionLibros() {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          const user = localStorage.getItem("usuario").replace(/"/g, "", {
-            method: "GET",
-            headers: { "Content-type": "application/json" },
-          });
+          const user = localStorage.getItem("usuario").replace(/"/g, "")
           fetch(`http://localhost:4000/libro/eliminar/${user}/${libro}`)
             .then((res) => res.json())
             .catch((err) => {

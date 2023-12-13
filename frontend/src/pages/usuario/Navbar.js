@@ -1,20 +1,15 @@
-import React, { useState } from "react";
+import Reac from "react";
 
 export default function Navbar() {
-
-  const handleLogout = () => {
-    // Eliminar el usuario del Local Storage al hacer logout
-    localStorage.removeItem('usuario');
-    // Puedes realizar otras acciones necesarias para el logout
-    console.log('Logout exitoso');
-  };
-  
-
+    const handleLogout = () => {
+        localStorage.clear();
+        window.location.href = "http://localhost:3000/";
+    };
   return (
     <>
       <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-          <a class="navbar-brand">Administrador </a>
+          <a class="navbar-brand">Bienvenido </a>
           <button
             class="navbar-toggler"
             type="button"
@@ -45,16 +40,24 @@ export default function Navbar() {
             <div class="offcanvas-body">
               <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="http://localhost:3000/AdministracionLibros">
+                  <a
+                    class="nav-link active"
+                    aria-current="page"
+                    href="http://localhost:3000/inicio"
+                  >
                     Libros
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="http://localhost:3000/AdministracionUsuarios">
-                    Usuarios
+                  <a
+                    class="nav-link active"
+                    aria-current="page"
+                    href="http://localhost:3000/usuario/mislibros"
+                  >
+                    Mis libros
                   </a>
                 </li>
-                
+
                 <li class="nav-item dropdown">
                   <a
                     class="nav-link dropdown-toggle"
@@ -67,8 +70,8 @@ export default function Navbar() {
                   </a>
                   <ul class="dropdown-menu dropdown-menu-dark">
                     <li>
-                      <a class="dropdown-item" href="#">
-                        Action 1
+                      <a class="dropdown-item" href="http://localhost:3000/usuario/verperfil">
+                        Mi perfil
                       </a>
                     </li>
                     <li>
@@ -80,7 +83,11 @@ export default function Navbar() {
                       <hr class="dropdown-divider" />
                     </li>
                     <li>
-                      <a class="dropdown-item" href="http://localhost:3000/" onClick={handleLogout}>
+                      <a
+                        class="dropdown-item"
+                        href="http://localhost:3000/"
+                        onClick={handleLogout}
+                      >
                         Cerrar sesión
                       </a>
                     </li>
