@@ -20,7 +20,7 @@ class LibroRoutes{
         this.router.get('/devolver/:email/:titulo/', libroController.DevolverLibro); //ususario devuelve un libro
         this.router.get('/comentarios/:titulo/', libroController.ListaComentarios); //retorna todos los comentarios del libro
         this.router.post('/escribirComentario/:email/:titulo/', libroController.IngresarComentario); //escribe un comentario al libro
-        this.router.get('/eliminarComentario/:email/:titulo/', libroController.EliminarComentario); //elimina un comentario al libro
+        this.router.post('/eliminarComentario/:email/:titulo/', libroController.EliminarComentario); //elimina un comentario al libro
         
     }
 }
