@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 
 import Service from "../services/Service.js";
 import ImageComponent from '../components/ImageComponent';
@@ -19,22 +20,38 @@ const Login = () => {
     });
   };
 
-  const vivo = (<button class="button-17" role="button" onClick={info}>Vivo</button>);
-
-
 
   const getUsers = (e) => {
-    fetch("http://localhost:4000/usuario/", {
-      method:"GET"
+    fetch(`http://localhost:4000/usuario/login/${username}`, {
+      method:"POST",
+      headers:{
+          'Content-Type': 'application/json'
+      },body: JSON.stringify({
+        password: password,
+      }),
   })
   .then(res => res.json())
   .catch(err =>{
       console.log('Error:',err);
   })
   .then(response => {
-      if (response){
-        
+      console.log(response);
+      if (response.message == "Usuario o Contraseña Incorrectos"){
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Usuario o Contraseña Incorrectos",
+        });
+      }else{
+        if (response.administrador == 1){
+          localStorage.setItem('usuario', JSON.stringify(response.email));
+          window.location.href = "http://localhost:3000/AdministracionLibros";
+        }else{
+          localStorage.setItem('usuario', JSON.stringify(response.email));
+          window.location.href = "http://localhost:3000/usuarios";
+        }
       }
+
   })
 };
   const handleUsernameChange = (event) => {
@@ -56,7 +73,6 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      {vivo}
       <form onSubmit={handleSubmit} className="login-form">
         <ImageComponent />
         <input

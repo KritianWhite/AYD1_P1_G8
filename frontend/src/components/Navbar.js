@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function Navbar() {
+
+  const handleLogout = () => {
+    // Eliminar el usuario del Local Storage al hacer logout
+    localStorage.removeItem('usuario');
+    // Puedes realizar otras acciones necesarias para el logout
+    console.log('Logout exitoso');
+  };
+  
 
   return (
     <>
       <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-          <a class="navbar-brand">Administrador USER1</a>
+          <a class="navbar-brand">Administrador </a>
           <button
             class="navbar-toggler"
             type="button"
@@ -72,7 +80,7 @@ export default function Navbar() {
                       <hr class="dropdown-divider" />
                     </li>
                     <li>
-                      <a class="dropdown-item" href="http://localhost:3000/">
+                      <a class="dropdown-item" href="http://localhost:3000/" onClick={handleLogout}>
                         Cerrar sesión
                       </a>
                     </li>

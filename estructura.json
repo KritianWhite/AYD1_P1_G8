@@ -1,0 +1,76 @@
+ruta: /usuario/registrar
+{
+    "nombre": "aa",
+    "apellido":"aa",
+    "telefono": 1234567891,
+    "email":"aa",
+    "passwordd": "aa",
+    "fecha_nacimiento" : "2001-5-10",
+    "administrador" : "0"
+}
+
+ruta: /usuario/login/:email
+{
+    "password": "pass"
+}
+
+ruta: /usuario/cambiarPass/:email
+{
+    "password": "pass"
+}
+
+ruta: /usuario/modificarDatos/:email
+{
+    "nombre": "aa",
+    "apellido":"aa",
+    "telefono": 1234567891,
+    "email":"aa",
+    "passwordd": "aa",
+    "fecha_nacimiento" : "2001-5-10",
+    "administrador" : "0"
+}
+
+ruta: /libro/publicar/:email
+{
+    "titulo": "aa",
+    "sinopsis": "aa",
+    "precio_compra": 22.8,
+    "precio_venta": 15.5,
+    "autor": "aa",
+    "anio_publicacion": 2022,
+    "editorial": "aaa",
+    "estado": "libre",
+    "fecha_devolucion": "2023-01-15",
+    "portada": "ruta_de_la_imagen.jpg"
+}
+
+
+ruta: /libro/editar/:email/:titulo/
+{
+    "titulo": "aa",
+    "sinopsis": "aa",
+    "precio_compra": 22.8,
+    "precio_venta": 15.5,
+    "autor": "aa",
+    "anio_publicacion": 2022,
+    "editorial": "aaa",
+    "estado": "libre",
+    "fecha_devolucion": "2023-01-15",
+    "portada": "ruta_de_la_imagen.jpg"
+}
+
+
+ruta: /libro/rentar/:email/:titulo/
+{
+    "fecha_devolucion": "2023-01-20"
+}
+
+ruta: /libro/escribirComentario/:email/:titulo/
+{
+    "comentario" : "soy un comentario"
+}
+
+ruta: /libro/eliminarComentario/:email/:titulo/
+{
+    "comentario" : "soy un comentario"
+}
