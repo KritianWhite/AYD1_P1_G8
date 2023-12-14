@@ -74,7 +74,6 @@ export default function VistaLibro() {
               console.log("Error:", err);
             })
             .then((response) => {
-              console.log(response);
               const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",
@@ -141,7 +140,6 @@ export default function VistaLibro() {
               console.log("Error:", err);
             })
             .then((response) => {
-              console.log(response);
               const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",
@@ -187,7 +185,6 @@ export default function VistaLibro() {
           console.log("Error:", err);
         })
         .then((response) => {
-          console.log(response);
           setTitulo(response.titulo);
           setSinopsis(response.sinopsis);
           setAutor(response.autor);
@@ -212,7 +209,6 @@ export default function VistaLibro() {
           if (
             response.message != "No se encontraron comentarios para el libro"
           ) {
-            console.log(response);
             setComentarios(response);
           } else {
             setComentarios([{ nombre: "Usuario", comentario: "...." }]);
