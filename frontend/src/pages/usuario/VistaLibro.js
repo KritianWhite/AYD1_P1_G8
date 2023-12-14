@@ -116,7 +116,8 @@ export default function VistaLibro() {
     swalWithBootstrapButtons
       .fire({
         title: `¿Seguro que quieres rentar el libro ${titulo} por Q.${precioRenta}?`,
-        text: "¡Esta acción ya no podrá ser revertida!",
+        html: `<p>Ingresa la fecha de devolución:</p>
+              <input type="date" id="fecha-devolucion" name="fecha">`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Sí, rentar.",
@@ -127,10 +128,13 @@ export default function VistaLibro() {
         if (result.isConfirmed) {
           const user = localStorage.getItem("usuario").replace(/"/g, "");
           fetch(`http://localhost:4000/libro/rentar/${user}/${titulo}`, {
-            method: "GET",
+            method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
+            body: JSON.stringify({
+              fecha_devolucion: document.getElementById("fecha-devolucion").value,
+            }),
           })
             .then((res) => res.json())
             .catch((err) => {
