@@ -177,6 +177,26 @@ class UsuariosController{
         }
     }
 
+    // get - Retorna los libros que estan rentados y comprados por le usuario
+    public async BibliotecaUsuario(req: Request, res: Response): Promise<void> {
+        try {
+            const email  = corregirFormato(req.params.email);
+            pool.query(
+                'SELECT DISTINCT L.*, R.fecha_devolucion AS fecha_devolucion_renta FROM proyecto1.USUARIO U JOIN  proyecto1.RENTA R ON U.id_usuario = R.usuario JOIN  proyecto1.LIBRO L ON R.libro = L.id_libro WHERE  U.email = ? AND (L.estado = \'rentado\' OR L.estado = \'vendido\')',  [email], (error, results) => {
+                // Verifica si hay resultados 
+                if (results && results.length > 0) {
+                    res.json(results);
+                } else {
+                    res.json({}); // Enviar un JSON vacío 
+                    console.log("No se encontraron libros rentados/comprados por el usuario");
+                }
+            });
+        } catch (error) {
+            console.error('Error en el proceso de blblioteca de usuario:', error);
+            res.status(500).json({ message: 'Error en el proceso de blblioteca de usuario' });
+        }
+    }
+
 }
 
 export const usuariosController = new UsuariosController();
