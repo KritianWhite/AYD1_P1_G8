@@ -101,30 +101,33 @@ class LibroController{
         try {
             const email  = corregirFormato(req.params.email);
             const titulo  = corregirFormato(req.params.titulo);
-            const { fecha_devolucion } = req.body.fecha_devolucion;
-            var idUsuario,idLibro;
+            const fecha_devolucion = req.body.fecha_devolucion;
             // Obtener id_usuario e id_libro
             pool.query('SELECT id_usuario, id_libro FROM USUARIO, LIBRO WHERE email = ? AND titulo = ?',
             [email, titulo], (error, results) => {
                 // Verifica si hay resultados 
-                if (!(results.length == 0)) {
-                    idUsuario = results[0].id_usuario;
-                    idLibro = results[0].id_libro;
+                if (results.length > 0) {
+                    const idUsuario = results[0].id_usuario;
+                    const idLibro = results[0].id_libro;
+                    console.log(idUsuario)
+                    console.log(idLibro)
+                    console.log(fecha_devolucion)
+                    //insertar renta
+                    pool.query('INSERT INTO RENTA (fecha_devolucion, usuario, libro) VALUES (?, ?, ?)',[fecha_devolucion, idUsuario, idLibro]);
+                    // Actualizar estado en la tabla LIBRO
+                    pool.query('UPDATE LIBRO SET estado = ? WHERE id_libro = ?',['rentado', idLibro]);
+                    // Insertar en la tabla HISTORIAL
+                    pool.query('INSERT INTO HISTORIAL (descripcion, usuario) VALUES (?, ?)',[`Libro '${titulo}' rentado`, idUsuario]);
+                    res.json({ message: 'Libro rentado' });
                 }else {
                     res.status(404).json({ message: 'Usuario o libro no encontrado' });
                     return;
                 }
             });
-            //insertar renta
-            pool.query('INSERT INTO RENTA (fecha_devolucion, usuario, libro) VALUES (?, ?, ?)',[fecha_devolucion, idUsuario, idLibro]);
-             // Actualizar estado en la tabla LIBRO
-            pool.query('UPDATE LIBRO SET estado = ? WHERE id_libro = ?',['rentado', idLibro]);
-            // Insertar en la tabla HISTORIAL
-            pool.query('INSERT INTO HISTORIAL (descripcion, usuario) VALUES (?, ?)',[`Libro '${titulo}' rentado`, idUsuario]);
-            res.json({ message: 'Libro rentado' });
             } catch (error) {
             //console.error('Error en rentar el libro:', error);
             res.status(500).json({ message: 'Error en rentar el libro' });
+            
         }
     }
 
@@ -133,24 +136,24 @@ class LibroController{
         try {
             const email  = corregirFormato(req.params.email);
             const titulo  = corregirFormato(req.params.titulo);
-            var idUsuario,idLibro;
             // Obtener id_usuario e id_libro
             pool.query('SELECT id_usuario, id_libro FROM USUARIO, LIBRO WHERE email = ? AND titulo = ?',
             [email, titulo], (error, results) => {
                 // Verifica si hay resultados 
                 if (!(results.length == 0)) {
-                    idUsuario = results[0].id_usuario;
-                    idLibro = results[0].id_libro;
+                    const idUsuario = results[0].id_usuario;
+                    const idLibro = results[0].id_libro;
+                     // Actualizar estado en la tabla LIBRO
+                    pool.query('UPDATE LIBRO SET estado = ? WHERE id_libro = ?',['vendido', idLibro]);
+                    // Insertar en la tabla HISTORIAL
+                    pool.query('INSERT INTO HISTORIAL (descripcion, usuario) VALUES (?, ?)',[`Libro '${titulo}' comprado`, idUsuario]);
+                    res.json({ message: 'Libro comprado' });
                 }else {
                     res.status(404).json({ message: 'Usuario o libro no encontrado' });
                     return;
                 }
             });
-             // Actualizar estado en la tabla LIBRO
-            pool.query('UPDATE LIBRO SET estado = ? WHERE id_libro = ?',['vendido', idLibro]);
-            // Insertar en la tabla HISTORIAL
-            pool.query('INSERT INTO HISTORIAL (descripcion, usuario) VALUES (?, ?)',[`Libro '${titulo}' comprado`, idUsuario]);
-            res.json({ message: 'Libro comprado' });
+            
             } catch (error) {
             //console.error('Error en comprar el libro:', error);
             res.status(500).json({ message: 'Error en comprar el libro' });
@@ -162,24 +165,23 @@ class LibroController{
         try {
             const email  = corregirFormato(req.params.email);
             const titulo  = corregirFormato(req.params.titulo);
-            var idUsuario,idLibro;
             // Obtener id_usuario e id_libro
             pool.query('SELECT id_usuario, id_libro FROM USUARIO, LIBRO WHERE email = ? AND titulo = ?',
             [email, titulo], (error, results) => {
                 // Verifica si hay resultados 
                 if (!(results.length == 0)) {
-                    idUsuario = results[0].id_usuario;
-                    idLibro = results[0].id_libro;
+                    const idUsuario = results[0].id_usuario;
+                    const idLibro = results[0].id_libro;
+                    // Actualizar estado en la tabla LIBRO
+                    pool.query('UPDATE LIBRO SET estado = ? WHERE id_libro = ?',['libre', idLibro]);
+                    // Insertar en la tabla HISTORIAL
+                    pool.query('INSERT INTO HISTORIAL (descripcion, usuario) VALUES (?, ?)',[`Libro '${titulo}' devuelto`, idUsuario]);
+                    res.json({ message: 'Libro devuelto' });
                 }else {
                     res.status(404).json({ message: 'Usuario o libro no encontrado' });
                     return;
                 }
             });
-             // Actualizar estado en la tabla LIBRO
-            pool.query('UPDATE LIBRO SET estado = ? WHERE id_libro = ?',['libre', idLibro]);
-            // Insertar en la tabla HISTORIAL
-            pool.query('INSERT INTO HISTORIAL (descripcion, usuario) VALUES (?, ?)',[`Libro '${titulo}' devuelto`, idUsuario]);
-            res.json({ message: 'Libro devuelto' });
             } catch (error) {
             //console.error('Error en devolver el libro:', error);
             res.status(500).json({ message: 'Error en devolver el libro' });
