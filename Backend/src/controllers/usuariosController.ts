@@ -127,7 +127,7 @@ class UsuariosController{
         }
     }
 
-    //GET - Devuelve la lista de descripcion del historial del usuario
+    //GET - 
     public async LibrosRentados(req: Request, res: Response): Promise<void> {
         try {
             const email  = corregirFormato(req.params.email);
@@ -140,7 +140,7 @@ class UsuariosController{
                 if (results && results.length > 0) {
                     res.json(results);
                 } else {
-                    res.json({}); // Enviar un JSON vacío 
+                    res.json({ message: 'No se encontraron libros rentados' });
                     console.log("No se encontraron libros rentados");
                 }
             });
@@ -185,7 +185,7 @@ class UsuariosController{
                 if (results && results.length > 0) {
                     res.json(results);
                 } else {
-                    res.json({}); // Enviar un JSON vacío 
+                    res.json({ message: 'No se encontraron libros rentados/comprados por el usuario' });
                     console.log("No se encontraron libros rentados/comprados por el usuario");
                 }
             });
