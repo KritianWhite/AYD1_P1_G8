@@ -48,7 +48,7 @@ const Login = () => {
           window.location.href = "http://localhost:3000/AdministracionLibros";
         }else{
           localStorage.setItem('usuario', JSON.stringify(response.email));
-          window.location.href = "http://localhost:3000/usuarios";
+          window.location.href = "http://localhost:3000/inicio";
         }
       }
 

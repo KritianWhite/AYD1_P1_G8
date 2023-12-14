@@ -23,7 +23,7 @@ function App() {
         <Route path="/administracionLibros" element={<AdministracionLibros/>}/>
         <Route path="/administracionUsuarios" element={<AdministracionUsuarios/>}/>
         <Route path="/inicio" element={<Inicio/>}/>
-        <Route path="/vistaLibro" element={<VistaLibro/>}/>
+        <Route path="/libro/:titulo" element={<VistaLibro/>}/>
         <Route path="/usuario/misLibros" element={<MisLibros/>}/>
         <Route path="/usuario/VerPerfil" element={<VerPerfil/>}/>
       </Routes>
