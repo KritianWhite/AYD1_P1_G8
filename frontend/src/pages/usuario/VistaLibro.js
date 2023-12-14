@@ -6,37 +6,58 @@ import Navbar from "./Navbar.js";
 import "./Styles/VistaLibro.css";
 
 export default function VistaLibro() {
-
   // variables para obtener los datos
   const [tittulo, setTitulo] = useState(""); // [variable, funcion que actualiza la variable
   const [sinopsis, setSinopsis] = useState("");
   const [autor, setAutor] = useState("");
   const [anio_publicacion, setAno_publicacion] = useState("");
   const [editorial, setEditorial] = useState("");
+  const [comentar, setComentar] = useState(""); //
 
   const { titulo } = useParams();
+
+  const handleComentar = async (e) => {
+    const user = localStorage.getItem("usuario").replace(/"/g, "");
+    fetch(`http://localhost:4000/libro/escribirComentario/${user}/${titulo}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        comentario: comentar,
+      }),
+    })
+      .then((res) => res.json())
+      .catch((err) => {
+        console.log("Error:", err);
+      })
+      .then((response) => {
+        console.log(response);
+        //window.location.reload();
+      });
+  };
 
   useEffect(() => {
     if (localStorage.getItem("usuario") === null) {
       window.location.href = "http://localhost:3000/";
-    }else{
+    } else {
       fetch(`http://localhost:4000/libro/${titulo}`, {
-        method:"GET",
-        headers:{
-            'Content-Type': 'application/json'
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
         },
-    })
-    .then(res => res.json())
-    .catch(err =>{
-        console.log('Error:',err);
-    })
-    .then(response => {
-        setTitulo(response.titulo);
-        setSinopsis(response.sinopsis);
-        setAutor(response.autor);
-        setAno_publicacion(response.anio_publicacion);
-        setEditorial(response.editorial);
-    })
+      })
+        .then((res) => res.json())
+        .catch((err) => {
+          console.log("Error:", err);
+        })
+        .then((response) => {
+          setTitulo(response.titulo);
+          setSinopsis(response.sinopsis);
+          setAutor(response.autor);
+          setAno_publicacion(response.anio_publicacion);
+          setEditorial(response.editorial);
+        });
     }
   }, []);
 
@@ -81,8 +102,8 @@ export default function VistaLibro() {
           <h2>Comentarios</h2>
           <form>
             <div className="comentario-input">
-              <textarea placeholder="Añadir comentario"></textarea>
-              <button type="submit">
+              <textarea placeholder="Añadir comentario" value={comentar} onChange={(e) => setComentar(e.target.value)}></textarea>
+              <button type="submit" onClick={() => handleComentar()}>
                 <i class="fa fa-paper-plane">Comentar</i>
               </button>
             </div>
