@@ -318,8 +318,8 @@ export default function AdmnistracionLibros() {
                     </tr>
                   </thead>
                   <tbody>
-                    {libros.map((libro) => (
-                      <tr key={libro.id_libro}>
+                    {libros.map((libro, index) => (
+                      <tr key={index}>
                         <th scope="row">{libro.id_libro}</th>
                         <td>{libro.titulo}</td>
                         <td>{libro.sinopsis}</td>

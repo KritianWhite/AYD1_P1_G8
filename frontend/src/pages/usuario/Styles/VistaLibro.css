@@ -60,6 +60,13 @@ p {
     font-size: 1.5em;
 }
 
+.btn-acciones{
+    margin-right: 10px;
+    width: 20vh;
+    height: 7.3vh;    
+}
+
+
 /* PARA COMENTARIOS */
 
 .comentarios {
