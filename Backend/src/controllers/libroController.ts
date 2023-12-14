@@ -192,7 +192,7 @@ class LibroController{
             const titulo  = corregirFormato(req.params.titulo);
             // Realiza la consulta 
             pool.query(
-                'SELECT COMENTARIO.* FROM COMENTARIO JOIN LIBRO ON COMENTARIO.libro = LIBRO.id_libro WHERE LIBRO.titulo = ?',
+                'SELECT U.nombre, C.comentario FROM proyecto1.COMENTARIO C INNER JOIN proyecto1.USUARIO U ON C.usuario = U.id_usuario INNER JOIN proyecto1.LIBRO L ON C.libro = L.id_libro WHERE L.titulo = ?',
                 [titulo],(error, results) => {
                     // Verifica si hay resultados
                     if (results && results.length > 0) {
