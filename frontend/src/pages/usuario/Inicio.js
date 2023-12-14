@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import Navbar from "./Navbar.js";
 
@@ -16,7 +17,6 @@ export default function Inicio() {
         console.log("Error:", err);
       })
       .then((response) => {
-        console.log(response);
         setLibros(response || []);
       });
   };
@@ -40,10 +40,12 @@ export default function Inicio() {
               <div key={index} className="col-md-3 col-sm-6">
                 <div className="our-team">
                   <div className="pic">
-                    <img
-                      src="https://img2.wallspic.com/previews/2/9/0/4/6/164092/164092-samsung_galaxy-samsung-smartphone-water-liquid-x750.jpg"
-                      alt={`Portada de ${libro.titulo}`}
-                    />
+                    <Link to={`/libro/${libro.titulo}`}>
+                      <img
+                        src="https://img2.wallspic.com/previews/2/9/0/4/6/164092/164092-samsung_galaxy-samsung-smartphone-water-liquid-x750.jpg"
+                        alt={`Portada de ${libro.titulo}`}
+                      />
+                    </Link>
                   </div>
                   <h3 className="title">{libro.titulo}</h3>
                   <p className="post">{libro.sinopsis}</p>

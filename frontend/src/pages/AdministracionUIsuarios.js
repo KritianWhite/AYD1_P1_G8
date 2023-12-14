@@ -147,11 +147,44 @@ export default function AdmnistracionUsuarios() {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          swalWithBootstrapButtons.fire({
-            title: "Eliminado!",
-            text: "El usuario ha sido eliminado correctamente.",
-            icon: "success",
-          });
+          const user = localStorage.getItem("usuario").replace(/"/g, '');
+          console.log(user);
+          fetch(`http://localhost:4000/usuario/eliminar/${user}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: correo }),
+          })
+            .then((res) => res.json())
+            .catch((err) => {
+              console.log("Error:", err);
+            })
+            .then((response) => {
+              console.log(response);
+              if (response){
+                getUsuarios();
+                const Toast = Swal.mixin({
+                  toast: true,
+                  position: "top-end",
+                  showConfirmButton: false,
+                  timer: 1500,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                  },
+                });
+                Toast.fire({
+                  icon: "success",
+                  title: "¡Usuario eliminado correctamente!",
+                });
+              }else{
+                Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "Ocurrio un error inesperado, intentelo de nuevo.",
+                });
+              }
+            });
         } else if (
           /* Read more about handling dismissals below */
           result.dismiss === Swal.DismissReason.cancel

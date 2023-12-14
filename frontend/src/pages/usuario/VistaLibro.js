@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import Navbar from "./Navbar.js";
 
@@ -6,9 +7,36 @@ import "./Styles/VistaLibro.css";
 
 export default function VistaLibro() {
 
+  // variables para obtener los datos
+  const [tittulo, setTitulo] = useState(""); // [variable, funcion que actualiza la variable
+  const [sinopsis, setSinopsis] = useState("");
+  const [autor, setAutor] = useState("");
+  const [anio_publicacion, setAno_publicacion] = useState("");
+  const [editorial, setEditorial] = useState("");
+
+  const { titulo } = useParams();
+
   useEffect(() => {
     if (localStorage.getItem("usuario") === null) {
       window.location.href = "http://localhost:3000/";
+    }else{
+      fetch(`http://localhost:4000/libro/${titulo}`, {
+        method:"GET",
+        headers:{
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(res => res.json())
+    .catch(err =>{
+        console.log('Error:',err);
+    })
+    .then(response => {
+        setTitulo(response.titulo);
+        setSinopsis(response.sinopsis);
+        setAutor(response.autor);
+        setAno_publicacion(response.anio_publicacion);
+        setEditorial(response.editorial);
+    })
     }
   }, []);
 
@@ -34,18 +62,18 @@ export default function VistaLibro() {
             />
           </div>
           <div class="detalles">
-            <h1>Título</h1>
+            <h1>Título: {tittulo}</h1>
             <div class="sinopsis">
-              <p>Sinopsis</p>
+              <p>Sinopsis: {sinopsis}</p>
             </div>
             <div class="autor">
-              <p>Autor</p>
+              <p>Autor: {autor}</p>
             </div>
             <div class="ano_publicacion">
-              <p>Año de publicación</p>
+              <p>Año de publicación: {anio_publicacion}</p>
             </div>
             <div class="editorial">
-              <p>Editorial</p>
+              <p>Editorial: {editorial}</p>
             </div>
           </div>
         </div>
