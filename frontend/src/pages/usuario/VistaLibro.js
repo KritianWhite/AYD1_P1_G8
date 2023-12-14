@@ -12,7 +12,8 @@ export default function VistaLibro() {
   const [autor, setAutor] = useState("");
   const [anio_publicacion, setAno_publicacion] = useState("");
   const [editorial, setEditorial] = useState("");
-  const [comentar, setComentar] = useState(""); //
+  const [comentar, setComentar] = useState("");
+  const [comentarios, setComentarios] = useState([]); 
 
   const { titulo } = useParams();
 
@@ -33,7 +34,7 @@ export default function VistaLibro() {
       })
       .then((response) => {
         console.log(response);
-        //window.location.reload();
+        window.location.reload();
       });
   };
 
@@ -57,6 +58,26 @@ export default function VistaLibro() {
           setAutor(response.autor);
           setAno_publicacion(response.anio_publicacion);
           setEditorial(response.editorial);
+        });
+
+      // Para obtener los comentarios
+      fetch(`http://localhost:4000/libro/comentarios/${titulo}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .catch((err) => {
+          console.log("Error:", err);
+        })
+        .then((response) => {
+          if (response.message != "No se encontraron comentarios para el libro"){
+            console.log(response);
+            setComentarios(response);
+          }else{
+            setComentarios([{"nombre": "Usuario", "comentario": "...."}]);
+          }
         });
     }
   }, []);
@@ -103,17 +124,18 @@ export default function VistaLibro() {
           <form>
             <div className="comentario-input">
               <textarea placeholder="Añadir comentario" value={comentar} onChange={(e) => setComentar(e.target.value)}></textarea>
-              <button type="submit" onClick={() => handleComentar()}>
+              <button onClick={() => handleComentar()}>
                 <i class="fa fa-paper-plane">Comentar</i>
               </button>
             </div>
           </form>
-          <div class="comentario">
-            <p>Usuario 1: ¡Excelente libro!</p>
-          </div>
-          <div class="comentario">
-            <p>Usuario 2: Me encantó la historia.</p>
-          </div>
+          {
+            comentarios.map((comentario, index) => (
+              <div key={index} class="comentario">
+                <p>{comentario.nombre}: {comentario.comentario}</p>
+              </div>
+            ))
+          }
         </div>
       </div>
     </>
